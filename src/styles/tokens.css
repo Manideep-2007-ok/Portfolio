@@ -1,0 +1,149 @@
+/* Every color, size, spacing, radius and duration lives here. Nothing else may define them. */
+
+/* Dark is the default, including when JS is off. */
+:root,
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #000000;
+  --surface: #111111;
+  --surface-raised: #1a1a1a;
+  --border: #222222;
+  --border-visible: #333333;
+  --text-disabled: #666666;
+  --text-secondary: #999999;
+  --text-primary: #e8e8e8;
+  --text-display: #ffffff;
+  --interactive: #5b9bf6;
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+  --bg: #f5f5f5;
+  --surface: #ffffff;
+  --surface-raised: #f0f0f0;
+  --border: #e8e8e8;
+  --border-visible: #cccccc;
+  --text-disabled: #999999;
+  --text-secondary: #666666;
+  --text-primary: #1a1a1a;
+  --text-display: #000000;
+  --interactive: #0062cc;
+}
+
+:root {
+  /* Mode-independent */
+  --accent: #d71921;
+  --success: #4a9e5c;
+  --warning: #d4a843;
+  --accent-subtle: rgba(215, 25, 33, 0.15);
+
+  /* Font families */
+  --font-display: "Doto Variable", "Doto Fallback", sans-serif;
+  --font-body: "Space Grotesk Variable", "Space Grotesk Fallback", system-ui, sans-serif;
+  --font-mono: "Space Mono", "Space Mono Fallback", ui-monospace, monospace;
+
+  /* Font weights */
+  --fw-light: 300;
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-doto: 700;
+
+  /* Type scale: size, line height, tracking */
+  --fs-hero: clamp(56px, 8vw, 128px);
+  --lh-hero: 0.9;
+  --ls-hero: -0.02em;
+
+  --fs-display: 48px;
+  --lh-display: 1;
+  --ls-display: -0.01em;
+
+  --fs-title: clamp(36px, 4.5vw, 56px);
+  --lh-title: 1.05;
+  --ls-title: -0.02em;
+
+  --fs-heading: 28px;
+  --lh-heading: 1.15;
+  --ls-heading: -0.01em;
+
+  --fs-lead: clamp(20px, 2vw, 24px);
+  --lh-lead: 1.35;
+  --ls-lead: -0.005em;
+
+  --fs-body: 16px;
+  --lh-body: 1.6;
+  --ls-body: 0;
+
+  --fs-small: 14px;
+  --lh-small: 1.5;
+  --ls-small: 0.01em;
+
+  --fs-label: 11px;
+  --lh-label: 1.2;
+  --ls-label: 0.08em;
+
+  --fs-caption: 12px;
+  --lh-caption: 1.4;
+  --ls-caption: 0.04em;
+
+  /* Spacing (8px base) */
+  --space-2xs: 2px;
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 48px;
+  --space-3xl: 64px;
+  --space-4xl: 96px;
+  --space-5xl: 160px;
+
+  /* Layout */
+  --container-max: 1440px;
+  --page-gutter: clamp(16px, 4vw, 48px);
+  --nav-h: 64px;
+  --statusbar-h: 32px;
+  --grid-cols: 12;
+  --grid-gap: 24px;
+  --section-pad: var(--space-5xl);
+
+  /* Drawn symbols (see Glyph.astro) */
+  --glyph-stroke: 1.5px;
+  --glyph-dot-size: 0.7em;
+
+  /* Radius */
+  --radius-sm: 4px;
+  --radius-pill: 999px;
+
+  /* Motion */
+  --dur-micro: 150ms;
+  --dur-base: 250ms;
+  --dur-slow: 400ms;
+  --ease: cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+/* Tablet: 640-1023 */
+@media (max-width: 1023px) {
+  :root {
+    --grid-cols: 8;
+    --grid-gap: 16px;
+    --section-pad: var(--space-4xl);
+  }
+}
+
+/* Mobile: < 640 */
+@media (max-width: 639px) {
+  :root {
+    --grid-cols: 4;
+    --fs-display: 40px;
+    --fs-heading: 24px;
+    --section-pad: var(--space-3xl);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-micro: 1ms;
+    --dur-base: 1ms;
+    --dur-slow: 1ms;
+  }
+}

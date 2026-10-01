@@ -1,0 +1,82 @@
+---
+// The only place symbols are defined. None of the three fonts contain these glyphs, so they are drawn.
+type Name = 'dot' | 'ring' | 'arrow-up-right' | 'arrow-right' | 'replay';
+type Tone = 'success' | 'warning' | 'accent' | 'secondary' | 'disabled';
+
+interface Props {
+  name: Name;
+  tone?: Tone;
+}
+
+const { name, tone } = Astro.props;
+
+const paths: Record<Exclude<Name, 'dot' | 'ring'>, string> = {
+  'arrow-up-right': 'M3 9 L9 3 M4 3 H9 V8',
+  'arrow-right': 'M2 6 H10 M6.5 2.5 L10 6 L6.5 9.5',
+  replay: 'M9.46 4 A4 4 0 1 1 5.3 2.06 M3 0.6 L5.3 2.06 L3.2 3.5',
+};
+---
+
+{
+  name === 'dot' || name === 'ring' ? (
+    <span class:list={['glyph', `glyph-${name}`, tone && `tone-${tone}`]} aria-hidden="true" />
+  ) : (
+    <svg class="glyph glyph-svg" viewBox="0 0 12 12" aria-hidden="true" focusable="false">
+      <path d={paths[name]} />
+    </svg>
+  )
+}
+
+<style>
+  .glyph {
+    display: inline-block;
+    flex: none;
+    vertical-align: -0.1em;
+  }
+
+  .glyph-dot,
+  .glyph-ring {
+    width: var(--glyph-dot-size);
+    height: var(--glyph-dot-size);
+    border-radius: var(--radius-pill);
+  }
+
+  .glyph-dot {
+    background: var(--dot-color, currentColor);
+  }
+
+  .glyph-ring {
+    border: var(--glyph-stroke) solid var(--dot-color, currentColor);
+  }
+
+  .tone-success {
+    --dot-color: var(--success);
+  }
+  .tone-warning {
+    --dot-color: var(--warning);
+  }
+  .tone-accent {
+    --dot-color: var(--accent);
+  }
+  .tone-secondary {
+    --dot-color: var(--text-secondary);
+  }
+  .tone-disabled {
+    --dot-color: var(--text-disabled);
+  }
+
+  .glyph-svg {
+    width: 1em;
+    height: 1em;
+    overflow: visible;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: var(--glyph-stroke);
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .glyph-svg path {
+    vector-effect: non-scaling-stroke;
+  }
+</style>

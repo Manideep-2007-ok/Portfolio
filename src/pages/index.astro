@@ -1,0 +1,442 @@
+---
+import Base from '../layouts/Base.astro';
+import Glyph from '../components/Glyph.astro';
+import { site } from '../data/site';
+
+const colors = [
+  '--bg',
+  '--surface',
+  '--surface-raised',
+  '--border',
+  '--border-visible',
+  '--text-disabled',
+  '--text-secondary',
+  '--text-primary',
+  '--text-display',
+  '--interactive',
+  '--accent',
+  '--success',
+  '--warning',
+  '--accent-subtle',
+];
+
+const types = [
+  { token: '--fs-hero', cls: 't-hero', sample: 'MANIDEEP' },
+  { token: '--fs-display', cls: 't-display', sample: '— —/150' },
+  { token: '--fs-title', cls: 't-title', sample: "Things I've built, and how I checked them." },
+  { token: '--fs-heading', cls: 't-heading', sample: 'FilingLens' },
+  { token: '--fs-lead', cls: 't-lead', sample: site.pitch },
+  {
+    token: '--fs-body',
+    cls: 't-body',
+    sample:
+      "I'm an engineering student in Bengaluru, studying at Scaler School of Technology and doing IIT Madras's BS in Data Science alongside it.",
+  },
+  { token: '--fs-small', cls: 't-small', sample: 'Numbers update as I build. Nothing here is projected.' },
+  { token: '--fs-label', cls: 't-label', sample: '01 / NOW BUILDING' },
+  { token: '--fs-caption', cls: 't-caption', sample: '01 OCT 2026' },
+];
+
+const spacing = [
+  '--space-2xs',
+  '--space-xs',
+  '--space-sm',
+  '--space-md',
+  '--space-lg',
+  '--space-xl',
+  '--space-2xl',
+  '--space-3xl',
+  '--space-4xl',
+  '--space-5xl',
+];
+
+const motion = ['--dur-micro', '--dur-base', '--dur-slow', '--ease'];
+
+const statuses = [
+  { label: 'BUILDING', tone: 'warning' },
+  { label: 'SHIPPED', tone: 'success' },
+  { label: 'PLANNED', tone: 'secondary' },
+  { label: 'PAUSED', tone: 'disabled' },
+] as const;
+
+const sections = ['COLOR', 'TYPE', 'SPACING', 'SHAPE', 'MOTION', 'SYMBOLS', 'LINKS AND FOCUS'];
+---
+
+<Base>
+  <header class="top container">
+    <span class="t-label muted">PHASE 0 / FOUNDATION</span>
+    <button class="theme-toggle" type="button" data-theme-toggle>
+      <span class="when-dark"><Glyph name="ring" /></span>
+      <span class="when-light"><Glyph name="dot" /></span>
+    </button>
+  </header>
+
+  <main id="main" class="container">
+    <h1 class="t-title intro">Token specimen</h1>
+    <p class="t-body muted intro-note">
+      Every design token, rendered from the stylesheet. Values are read from the live page, so they update when the theme
+      changes.
+    </p>
+
+    <section class="block" aria-labelledby="s-color">
+      <p class="t-label muted block-label">01 / {sections[0]}</p>
+      <h2 class="t-heading" id="s-color">Colors</h2>
+      <div class="swatches">
+        {
+          colors.map((token) => (
+            <div class="swatch">
+              <div class="chip" style={`background: var(${token})`} />
+              <span class="t-caption">{token}</span>
+              <span class="t-caption muted" data-token={token} />
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <section class="block" aria-labelledby="s-type">
+      <p class="t-label muted block-label">02 / {sections[1]}</p>
+      <h2 class="t-heading" id="s-type">Type scale</h2>
+      <div class="type-rows">
+        {
+          types.map((row) => (
+            <div class="type-row">
+              <div class="type-meta t-caption muted">
+                <span>{row.token}</span>
+                <span data-size />
+              </div>
+              <p class={`sample ${row.cls}`}>{row.sample}</p>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <section class="block" aria-labelledby="s-spacing">
+      <p class="t-label muted block-label">03 / {sections[2]}</p>
+      <h2 class="t-heading" id="s-spacing">Spacing</h2>
+      <div class="space-rows">
+        {
+          spacing.map((token) => (
+            <div class="space-row">
+              <span class="t-caption">{token}</span>
+              <span class="t-caption muted" data-token={token} />
+              <span class="space-bar" style={`width: var(${token})`} />
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <section class="block" aria-labelledby="s-shape">
+      <p class="t-label muted block-label">04 / {sections[3]}</p>
+      <h2 class="t-heading" id="s-shape">Radius, hairlines and dot grid</h2>
+      <div class="shapes">
+        <div class="shape radius-sm t-label">--radius-sm</div>
+        <div class="shape radius-pill t-label">--radius-pill</div>
+        <div class="shape hairline t-label">--border</div>
+        <div class="shape hairline-visible t-label">--border-visible</div>
+        <div class="shape dot-grid t-label">.dot-grid</div>
+      </div>
+    </section>
+
+    <section class="block" aria-labelledby="s-motion">
+      <p class="t-label muted block-label">05 / {sections[4]}</p>
+      <h2 class="t-heading" id="s-motion">Motion</h2>
+      <div class="space-rows">
+        {
+          motion.map((token) => (
+            <div class="motion-row">
+              <span class="t-caption">{token}</span>
+              <span class="t-caption muted" data-token={token} />
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <section class="block" aria-labelledby="s-symbols">
+      <p class="t-label muted block-label">06 / {sections[5]}</p>
+      <h2 class="t-heading" id="s-symbols">Drawn symbols</h2>
+      <div class="symbols">
+        <p class="t-label symbol-line">
+          <span>RESUME</span><Glyph name="arrow-up-right" />
+          <span class="gap">SEQUENCE</span><Glyph name="arrow-right" />
+          <span class="gap">RESAMPLE</span><Glyph name="replay" />
+          <span class="gap">THEME</span><Glyph name="ring" /><Glyph name="dot" />
+        </p>
+        <p class="t-lead symbol-line">
+          <Glyph name="arrow-up-right" /><Glyph name="arrow-right" /><Glyph name="replay" /><Glyph name="ring" /><Glyph
+            name="dot"
+          />
+        </p>
+        <ul class="statuses">
+          {
+            statuses.map((status) => (
+              <li class="t-label muted">
+                <Glyph name="dot" tone={status.tone} /> {status.label}
+              </li>
+            ))
+          }
+          <li class="t-label muted"><Glyph name="dot" tone="accent" /> DENOISING</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="block" aria-labelledby="s-links">
+      <p class="t-label muted block-label">07 / {sections[6]}</p>
+      <h2 class="t-heading" id="s-links">Links and focus</h2>
+      <p class="t-body">
+        Inline links are the only place the interactive color is used. All of my code is on{' '}
+        <a
+          class="link-inline"
+          href={site.links.github}
+          target="_blank"
+          rel="noopener noreferrer"
+          >GitHub<span class="visually-hidden"> (opens in new tab)</span></a
+        >. Press Tab to see the focus ring.
+      </p>
+    </section>
+  </main>
+
+  <footer class="foot container">
+    <span class="t-label muted">© 2026 MANIDEEP THUMU</span>
+  </footer>
+</Base>
+
+<style>
+  .top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: var(--nav-h);
+  }
+
+  .muted {
+    color: var(--text-secondary);
+  }
+
+  .theme-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border: 1px solid var(--border-visible);
+    border-radius: var(--radius-pill);
+    color: var(--text-primary);
+    transition:
+      border-color var(--dur-micro) var(--ease),
+      color var(--dur-micro) var(--ease);
+  }
+
+  .theme-toggle:hover {
+    border-color: var(--text-display);
+    color: var(--text-display);
+  }
+
+  :global(:root[data-theme='light']) .when-dark,
+  :global(:root:not([data-theme='light'])) .when-light {
+    display: none;
+  }
+
+  .intro {
+    margin-top: var(--space-4xl);
+    color: var(--text-display);
+  }
+
+  .intro-note {
+    margin-top: var(--space-md);
+  }
+
+  .block {
+    margin-top: var(--space-4xl);
+  }
+
+  .block-label {
+    max-width: none;
+    padding-bottom: var(--space-sm);
+    border-bottom: 1px solid var(--border-visible);
+    margin-bottom: var(--space-2xl);
+  }
+
+  .block h2 {
+    color: var(--text-display);
+    margin-bottom: var(--space-xl);
+  }
+
+  .swatches {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(var(--space-5xl), 1fr));
+    gap: var(--space-lg) var(--space-md);
+  }
+
+  .swatch {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+
+  .chip {
+    height: var(--space-3xl);
+    margin-bottom: var(--space-xs);
+    border: 1px solid var(--border-visible);
+  }
+
+  .type-rows {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2xl);
+  }
+
+  .type-row {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .type-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs) var(--space-md);
+  }
+
+  .sample {
+    max-width: none;
+    color: var(--text-display);
+    overflow-wrap: anywhere;
+  }
+
+  .space-rows {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .space-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: var(--space-xs) var(--space-md);
+  }
+
+  .space-bar {
+    display: block;
+    grid-column: 1 / -1;
+    height: var(--space-sm);
+    max-width: 100%;
+    background: var(--text-display);
+  }
+
+  @media (min-width: 640px) {
+    .space-row {
+      grid-template-columns: var(--space-5xl) var(--space-3xl) minmax(0, 1fr);
+    }
+
+    .space-bar {
+      grid-column: auto;
+    }
+  }
+
+  .motion-row {
+    display: grid;
+    grid-template-columns: var(--space-5xl) 1fr;
+    gap: var(--space-md);
+  }
+
+  .shapes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-md);
+  }
+
+  .shape {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--space-5xl);
+    height: var(--space-4xl);
+    color: var(--text-secondary);
+  }
+
+  .radius-sm {
+    border: 1px solid var(--border-visible);
+    border-radius: var(--radius-sm);
+  }
+
+  .radius-pill {
+    border: 1px solid var(--border-visible);
+    border-radius: var(--radius-pill);
+  }
+
+  .hairline {
+    border: 1px solid var(--border);
+  }
+
+  .hairline-visible {
+    border: 1px solid var(--border-visible);
+  }
+
+  .symbols {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+  }
+
+  .symbol-line {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-sm);
+    max-width: none;
+    color: var(--text-primary);
+  }
+
+  .symbol-line .gap {
+    margin-left: var(--space-lg);
+  }
+
+  .statuses {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-md) var(--space-xl);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .foot {
+    margin-top: var(--space-4xl);
+    padding-block: var(--space-xl);
+  }
+</style>
+
+<script>
+  import { currentTheme, toggleTheme } from '../scripts/theme';
+
+  function paint() {
+    const root = getComputedStyle(document.documentElement);
+
+    document.querySelectorAll<HTMLElement>('[data-token]').forEach((el) => {
+      el.textContent = root.getPropertyValue(el.dataset.token ?? '').trim();
+    });
+
+    document.querySelectorAll<HTMLElement>('.type-row').forEach((row) => {
+      const sample = row.querySelector<HTMLElement>('.sample');
+      const out = row.querySelector<HTMLElement>('[data-size]');
+      if (!sample || !out) return;
+      const cs = getComputedStyle(sample);
+      const family = cs.fontFamily.split(',')[0].replace(/"/g, '');
+      out.textContent = `${cs.fontSize} · ${family} ${cs.fontWeight}`;
+    });
+
+    const toggle = document.querySelector<HTMLButtonElement>('[data-theme-toggle]');
+    toggle?.setAttribute('aria-label', currentTheme() === 'dark' ? 'Switch to light theme' : 'Switch to dark theme');
+  }
+
+  document.querySelector('[data-theme-toggle]')?.addEventListener('click', toggleTheme);
+  window.addEventListener('themechange', paint);
+  window.addEventListener('resize', paint);
+  paint();
+  document.fonts.ready.then(paint);
+</script>

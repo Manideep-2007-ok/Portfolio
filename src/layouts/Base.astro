@@ -1,0 +1,64 @@
+---
+import '../styles/tokens.css';
+import '../styles/base.css';
+import dotoUrl from '@fontsource-variable/doto/files/doto-latin-wght-normal.woff2?url';
+import groteskUrl from '@fontsource-variable/space-grotesk/files/space-grotesk-latin-wght-normal.woff2?url';
+import { site } from '../data/site';
+import { themeColors } from '../lib/theme-colors';
+import { withBase } from '../lib/url';
+
+interface Props {
+  title?: string;
+  description?: string;
+  noindex?: boolean;
+}
+
+const city = site.location.split(',')[0];
+const {
+  title = 'Manideep Thumu — ML/AI engineering student',
+  description = `${site.pitch} Portfolio of ${site.name}, ${site.role} in ${city}.`,
+  noindex = false,
+} = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+---
+
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex" />}
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="theme-color" content={themeColors.dark} data-dark={themeColors.dark} data-light={themeColors.light} />
+    <link rel="icon" type="image/svg+xml" href={withBase('favicon.svg')} />
+    <link rel="preload" as="font" type="font/woff2" href={dotoUrl} crossorigin />
+    <link rel="preload" as="font" type="font/woff2" href={groteskUrl} crossorigin />
+    <script is:inline>
+      (function () {
+        var t;
+        try {
+          t = localStorage.getItem('theme');
+        } catch (e) {}
+        if (t !== 'light' && t !== 'dark') {
+          t = matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+        }
+        document.documentElement.dataset.theme = t;
+        var m = document.querySelector('meta[name="theme-color"]');
+        if (m) m.content = m.dataset[t];
+      })();
+    </script>
+  </head>
+  <body>
+    <a class="skip-link t-label" href="#main">Skip to content</a>
+    <slot />
+  </body>
+</html>
